@@ -1,0 +1,375 @@
+***(1-3)Prepare scatter plot,find all null values in given dataset and remove them,categorical values in numeric format for given database
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+dataset=pd.read_csv("")
+dataset.dtypes
+dataset.isnull().sum()
+x=dataset.iloc[:,:-1]
+y=dataset.iloc[:,-1]
+
+from sklearn.impute import SimpleImputer
+imp=SimpleImputer(missing_values=np.NaN,strategy='mean')
+Imputer=imp.fit(x[:,1:3])
+
+from sklearn.impute import SimpleImputer
+imp=SimpleImputer(missing_values=np.NaN,strategy='mean')
+Imputer=imp.fit(x[:,1:3])
+x[:,1:3]=imp.transform(x[:,1:3])
+
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+ct=ColumnTransformer(transformers=[('encoder',OneHotEncoder(),[0])],remainder='passthrough')
+x=np.array(ct.fit_transform(x))
+print(x)
+
+print(y)
+
+from sklearn.preprocessing import LabelEncoder
+le=LabelEncoder()
+y=le.fit_transform(y)
+
+print(y)
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.3,random_state=0)
+
+print(x_train)
+print(x_test)
+print(y_train)
+print(y_test)
+from sklearn.preprocessing import StandardScaler
+sc=StandardScaler()
+x_train=sc.fit_transform(x_train)
+x_test=sc.transform(x_test)
+print(x_train)
+print(x_test)
+
+
+
+*(4-5) Program to implement simple linear regression for predicting house price,multiple linear regression,
+
+from google.colab import files
+
+uploaded = files.upload()
+
+for fn in uploaded.keys():
+  print('User uploaded file "{name}" with length {length} bytes'.format(
+      name=fn, length=len(uploaded[fn])))
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+data_set=pd.read_csv("Salary_Data.csv")
+
+data_set
+x=data_set.iloc[:,0:1].values
+x
+
+y=data_set.iloc[:,1:2].values
+y
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=1/3,random_state=0)
+x_train
+
+x_test
+y_train
+y_test
+from sklearn.linear_model import LinearRegression
+regretor=LinearRegression()
+regretor.fit(x_train,y_train)
+y_pred=regretor.predict(x_test)
+y_pred
+x_pred=regretor.predict(x_train)
+x_pred
+plt.scatter(x_train,y_train,color="Red")
+plt.plot(x_train,x_pred,color="blue")
+plt.title("Salary vs Experiencde")
+plt.xlabel("Year of Experience")
+plt.ylabel("Salary(in Rs)")
+
+
+
+from google.colab import files
+
+uploaded = files.upload()
+
+for fn in uploaded.keys():
+  print('User uploaded file "{name}" with length {length} bytes'.format(
+      name=fn, length=len(uploaded[fn])))
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+data_set=pd.read_csv("50_Startups.csv")
+data_set
+x=data_set.iloc[:,:-1].values
+x
+y=data_set.iloc[:,4].values
+y
+
+from sklearn.preprocessing import LabelEncoder
+labelencoder_x=LabelEncoder()
+x[:,3]=labelencoder_x.fit_transform(x[:,3])
+
+print(x)
+
+
+
+
+
+*** (6)  program to implement polynomial regression
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+
+# Generate sample data
+np.random.seed(0)
+X = np.sort(5 * np.random.rand(80, 1), axis=0)
+y = np.sin(X).ravel() + np.random.rand(80)
+
+# Fit a polynomial regression model
+degree = 3  # You can change the degree as needed
+poly_features = PolynomialFeatures(degree=degree)
+X_poly = poly_features.fit_transform(X)
+model = LinearRegression()
+model.fit(X_poly, y)
+
+# Predict values using the model
+X_test = np.linspace(0, 5, 100)[:, np.newaxis]
+X_test_poly = poly_features.transform(X_test)
+y_pred = model.predict(X_test_poly)
+
+# Plot the results
+plt.scatter(X, y, color='blue', label='Data')
+plt.plot(X_test, y_pred, col…
+
+
+
+
+****(7) Navie bayes
+
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Sample text data and corresponding labels
+corpus = ["This is a positive sentence.", "Negative sentiment here.", "A positive message."]
+labels = [1, 0, 1]  # 1 for positive, 0 for negative
+
+# Create a CountVectorizer to convert text data into numerical features
+vectorizer = CountVectorizer()
+
+# Convert the text data into a document-term matrix
+X = vectorizer.fit_transform(corpus)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, labels, test_size=0.2, random_state=42)
+
+# Create a Naive Bayes classifier
+nb…
+
+
+
+
+
+from sklearn.tree import DecisionTreeClassifier
+
+# Define the dataset with weather conditions and corresponding play tennis decision (1 for Yes, 0 for No)
+# Format: Outlook, Temperature, Humidity, Wind
+data = [
+    ['Sunny', 'Hot', 'High', 'Weak', 0],
+    ['Sunny', 'Hot', 'High', 'Strong', 0],
+    ['Overcast', 'Hot', 'High', 'Weak', 1],
+    ['Rainy', 'Mild', 'High', 'Weak', 1],
+    ['Rainy', 'Cool', 'Normal', 'Weak', 1],
+    ['Rainy', 'Cool', 'Normal', 'Strong', 0],
+    ['Overcast', 'Cool', 'Normal', 'Strong', 1],
+    ['Sunny', 'Mild', 'High', 'Weak', 0],
+    ['Sunny', 'Cool', 'Normal', 'Weak', 1],
+    ['Rainy', 'Mild', 'Normal', 'Weak', 1],
+    ['Sunny', 'Mild', 'Normal', 'Strong', 1],
+    ['Overcast', 'Mild', 'High', 'Strong', 1],
+    ['Overcast', 'Hot', '…
+[1:51 PM, 10/20/2023] $@rt#@k😎: from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+# Load a sample dataset (Iris dataset for binary classification)
+iris = datasets.load_iris()
+X = iris.data[:100]  # Select the first 100 samples for binary classification
+y = iris.target[:100]  # Two classes (0 and 1)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create a Linear SVM classifier
+clf = SVC(kernel='linear')
+
+# Train the classifier on the training data
+clf.fit(X_train, y_train)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+
+# Generate sample data
+np.random.seed(0)
+X = np.sort(5 * np.random.rand(80, 1), axis=0)
+y = np.sin(X).ravel() + np.random.rand(80)
+
+# Fit a polynomial regression model
+degree = 3  # You can change the degree as needed
+poly_features = PolynomialFeatures(degree=degree)
+X_poly = poly_features.fit_transform(X)
+model = LinearRegression()
+model.fit(X_poly, y)
+
+# Predict values using the model
+X_test = np.linspace(0, 5, 100)[:, np.newaxis]
+X_test_poly = poly_features.transform(X_test)
+y_pred = model.predict(X_test_poly)
+
+# Plot the results
+plt.scatter(X, y, color='blue', label='Data')
+plt.plot(X_test, y_pred, color='red', label='Polynomial Regression')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.title(f'Polynomial Regression (Degree {degree})')
+plt.show()
+
+
+
+
+
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Sample text data and corresponding labels
+corpus = ["This is a positive sentence.", "Negative sentiment here.", "A positive message."]
+labels = [1, 0, 1]  # 1 for positive, 0 for negative
+
+# Create a CountVectorizer to convert text data into numerical features
+vectorizer = CountVectorizer()
+
+# Convert the text data into a document-term matrix
+X = vectorizer.fit_transform(corpus)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, labels, test_size=0.2, random_state=42)
+
+# Create a Naive Bayes classifier
+nb_classifier = MultinomialNB()
+
+# Train the classifier on the training data
+nb_classifier.fit(X_train, y_train)
+
+# Predict the labels for the test data
+y_pred = nb_classifier.predict(X_test)
+
+# Calculate and print the accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy * 100:.2f}%")
+
+
+
+
+
+
+from sklearn.tree import DecisionTreeClassifier
+
+# Define the dataset with weather conditions and corresponding play tennis decision (1 for Yes, 0 for No)
+# Format: Outlook, Temperature, Humidity, Wind
+data = [
+    ['Sunny', 'Hot', 'High', 'Weak', 0],
+    ['Sunny', 'Hot', 'High', 'Strong', 0],
+    ['Overcast', 'Hot', 'High', 'Weak', 1],
+    ['Rainy', 'Mild', 'High', 'Weak', 1],
+    ['Rainy', 'Cool', 'Normal', 'Weak', 1],
+    ['Rainy', 'Cool', 'Normal', 'Strong', 0],
+    ['Overcast', 'Cool', 'Normal', 'Strong', 1],
+    ['Sunny', 'Mild', 'High', 'Weak', 0],
+    ['Sunny', 'Cool', 'Normal', 'Weak', 1],
+    ['Rainy', 'Mild', 'Normal', 'Weak', 1],
+    ['Sunny', 'Mild', 'Normal', 'Strong', 1],
+    ['Overcast', 'Mild', 'High', 'Strong', 1],
+    ['Overcast', 'Hot', 'Normal', 'Weak', 1],
+    ['Rainy', 'Mild', 'High', 'Strong', 0]
+]
+
+# Split the data into features (X) and labels (y)
+X = [row[:4] for row in data]
+y = [row[4] for row in data]
+
+# Create a Decision Tree classifier
+clf = DecisionTreeClassifier()
+
+# Train the classifier on the dataset
+clf.fit(X, y)
+
+# Predict whether to play tennis based on new weather conditions
+new_weather = ['Sunny', 'Cool', 'High', 'Strong']  # Change these values as needed
+prediction = clf.predict([new_weather])
+
+if prediction[0] == 1:
+    decision = 'Yes'
+else:
+    decision = 'No'
+
+print(f"Decision: {decision} to play tennis")
+
+
+
+
+
+
+
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+# Load a sample dataset (Iris dataset for binary classification)
+iris = datasets.load_iris()
+X = iris.data[:100]  # Select the first 100 samples for binary classification
+y = iris.target[:100]  # Two classes (0 and 1)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create a Linear SVM classifier
+clf = SVC(kernel='linear')
+
+# Train the classifier on the training data
+clf.fit(X_train, y_train)
+
+# Make predictions on the test data
+y_pred = clf.predict(X_test)
+
+# Calculate and print the accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy * 100:.2f}%")
