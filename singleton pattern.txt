@@ -1,0 +1,37 @@
+Write a Java Program to implement Singleton pattern for multithreading.
+
+Solution-Singleton is one of the most widely used creational design pattern to restrict the object created by applications. If you are using it in a multi-threaded environment, then the thread-safety of the singleton class is very important. In real-world applications, resources like Database connections or Enterprise Information Systems (EIS) are limited and should be used wisely to avoid any resource crunch. To achieve this, we can implement a Singleton design pattern. 
+
+We can create a wrapper class for the resource and limit the number of objects created at runtime to one. In general, we follow the below steps to create a singleton class:
+Create the private constructor to avoid any new object creation with new operator.
+Declare a private static instance of the same class.
+Provide a public static method that will return the singleton class instance variable. If the variable is not initialized then initialize it or else simply return the instance variable.
+1.package com.journaldev.designpatterns;
+
+public class ASingleton {
+
+	private static ASingleton instance = null;
+
+	private ASingleton() {
+	}
+
+	public static ASingleton getInstance() {
+		if (instance == null) {
+			instance = new ASingleton();
+		}
+		return instance;
+	}}
+
+2.package com.journaldev.designpatterns;
+
+public class ASingleton {
+
+	private static ASingleton instance = null;
+
+	private ASingleton() {
+	}
+	public static ASingleton getInstance() {
+		if (instance == null) {
+			instance = new ASingleton();
+		}		return instance;}}
+
