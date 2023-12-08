@@ -1,0 +1,33 @@
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Sample text data and corresponding labels
+corpus = ["This is a positive sentence.", "Negative sentiment here.", "A positive message."]
+labels = [1, 0, 1]  # 1 for positive, 0 for negative
+
+# Create a CountVectorizer to convert text data into numerical features
+vectorizer = CountVectorizer()
+
+# Convert the text data into a document-term matrix
+X = vectorizer.fit_transform(corpus)
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, labels, test_size=0.2, random_state=42)
+
+# Create a Naive Bayes classifier
+nb_classifier = MultinomialNB()
+
+# Train the classifier on the training data
+nb_classifier.fit(X_train, y_train)
+
+# Predict the labels for the test data
+y_pred = nb_classifier.predict(X_test)
+
+# Calculate and print the accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy * 100:.2f}%")
+
+
+
